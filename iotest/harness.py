@@ -6,16 +6,17 @@ import inspect
 def find_cases():
     caller_dir = pathlib.Path(inspect.stack()[1][1]).parent
     cases_dir = caller_dir / 'testcases'
-    return [x for x in cases_dir.iterdir() if x.is_dir()]
+    return [x.name for x in cases_dir.iterdir() if x.is_dir()]
 
 
-def execute(testcase_dir, mainfile_relpath='main.py'):
+def execute(testcase_dirname, mainfile_relpath='main.py'):
     caller_dir = pathlib.Path(inspect.stack()[1][1]).parent
     mainfile =  caller_dir / mainfile_relpath
+    testcase_basedir = caller_dir / 'testcases'
 
-    expected_file = testcase_dir / 'expected.txt'
-    actual_file = testcase_dir / 'actual.txt'
-    input_file = testcase_dir / 'input.txt'
+    expected_file = testcase_basedir / testcase_dirname / 'expected.txt'
+    actual_file = testcase_basedir / testcase_dirname / 'actual.txt'
+    input_file = testcase_basedir / testcase_dirname / 'input.txt'
 
     with open(expected_file.resolve(), 'r') as exfile:
         expected = [x.strip() for x in exfile.readlines()]

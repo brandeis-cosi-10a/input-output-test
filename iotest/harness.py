@@ -1,7 +1,7 @@
 import pathlib
 import pexpect
-import pytest
 import inspect
+import subprocess
 
 def find_cases():
     caller_dir = pathlib.Path(inspect.stack()[1][1]).parent
@@ -31,4 +31,7 @@ def execute(testcase_dirname, mainfile_relpath='main.py'):
     with open(actual_file, 'w') as outfile:
         outfile.writelines([x + '\n' for x in actual])
     
+    if actual != expected:
+        subprocess.run(['code', '-d', actual_file, expected_file])
+
     assert actual == expected, f"Comparison failed, run this command to see the differences:\ncode -d {expected_file} {actual_file}"

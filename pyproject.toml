@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "iotest-grader"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Joe Delfino", email="jdelfino@brandeis.edu" },
 ]
-description = "A pytest harness for input/output tests"
+description = "A pytest harness for input/output tests, intended for use in VSCode"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [

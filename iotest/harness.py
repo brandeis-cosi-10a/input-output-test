@@ -34,6 +34,6 @@ def execute(testcase_dirname, mainfile_relpath='main.py'):
     
     in_vscode = 'USER' in os.environ.keys() and os.environ['USER'] == 'vscode'
     if in_vscode and (actual != expected):
-        subprocess.run(['code', '-d', actual_file, expected_file])
+        subprocess.run(['code', '-d', expected_file, actual_file])
 
     assert actual == expected, f"Comparison failed, run this command to see the differences:\ncode -d {expected_file} {actual_file}"

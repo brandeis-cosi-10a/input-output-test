@@ -2,6 +2,7 @@ import pathlib
 import pexpect
 import inspect
 import subprocess
+import os
 
 def find_cases():
     caller_dir = pathlib.Path(inspect.stack()[1][1]).parent
@@ -31,7 +32,8 @@ def execute(testcase_dirname, mainfile_relpath='main.py'):
     with open(actual_file, 'w') as outfile:
         outfile.writelines([x + '\n' for x in actual])
     
-    if actual != expected:
+    in_vscode = 'TERM_PROGRAM' in os.environ.keys() and os.environ['TERM_PROGRAM'] == 'vscode'
+    if in_vscode and (actual != expected):
         subprocess.run(['code', '-d', actual_file, expected_file])
 
     assert actual == expected, f"Comparison failed, run this command to see the differences:\ncode -d {expected_file} {actual_file}"

@@ -32,7 +32,7 @@ def execute(testcase_dirname, mainfile_relpath='main.py'):
     with open(actual_file, 'w') as outfile:
         outfile.writelines([x + '\n' for x in actual])
     
-    in_vscode = 'TERM_PROGRAM' in os.environ.keys() and os.environ['TERM_PROGRAM'] == 'vscode'
+    in_vscode = 'USER' in os.environ.keys() and os.environ['USER'] == 'vscode'
     if in_vscode and (actual != expected):
         subprocess.run(['code', '-d', actual_file, expected_file])
 

@@ -30,6 +30,9 @@ def execute(testcase_dirname, mainfile_relpath='main.py'):
 
     actual = [x.strip() for x in child.read().decode('ascii').split('\r\n') if x]
     with open(actual_file, 'w') as outfile:
+        # Workaround for https://github.com/microsoft/vscode/issues/224498
+        my_env = os.environ.copy()
+        del my_env["ELECTRON_RUN_AS_NODE"]
         outfile.writelines([x + '\n' for x in actual])
     
     in_vscode = 'USER' in os.environ.keys() and os.environ['USER'] == 'vscode'

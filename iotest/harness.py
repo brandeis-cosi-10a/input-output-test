@@ -36,7 +36,8 @@ def execute(testcase_dirname, mainfile_relpath='main.py'):
     in_vscode = 'USER' in os.environ.keys() and os.environ['USER'] == 'vscode'
     if in_vscode and (actual != expected):
         my_env = os.environ.copy()
-        del my_env["ELECTRON_RUN_AS_NODE"]
+        if "ELECTRON_RUN_AS_NODE" in my_env:
+            del my_env["ELECTRON_RUN_AS_NODE"]
         subprocess.run(['code', '-d', expected_file, actual_file], env=my_env)
 
     assert actual == expected, f"Comparison failed, run this command to see the differences:\ncode -d {expected_file} {actual_file}"
